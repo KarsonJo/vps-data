@@ -49,5 +49,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: racknerd-data-output
-          path: racknerd-list.json
+          path: ${{ env.RACKNERD_REPO }}/racknerd-list.json
           
