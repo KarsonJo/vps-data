@@ -37,4 +37,7 @@ jobs:
           custom_param: ${{ inputs.custom_param }}
         run: |
           echo $custom_param
+          python --version
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
           python ${{ env.RACKNERD_REPO }}/main.py
