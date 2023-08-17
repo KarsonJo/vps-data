@@ -32,7 +32,16 @@ jobs:
           repository: KarsonJo/racknerd-observer
           token: ${{ secrets.PRIVATE_ACCESS_TOKEN }}
           path: ${{ env.RACKNERD_REPO }}
-
+          
+      # Download Previous Artifact
+      - name: Download artifact
+        id: download-artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          name: racknerd-data-output
+          path: ${{ env.RACKNERD_REPO }}
+          
+          
       # Runs a single command using the runners shell
       - name: Run update script
         env:
@@ -44,6 +53,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           python main.py $custom_param
+          
       # save output as artifacts
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
