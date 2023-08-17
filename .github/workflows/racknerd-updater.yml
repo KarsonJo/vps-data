@@ -4,6 +4,7 @@ name: Racknerd Updater
 
 env:
   RACKNERD_REPO: racknerd
+  MAIN_REPO: vps-data
 
 # Controls when the workflow will run
 on:
@@ -25,7 +26,8 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - name: CheckOut Source
+        uses: actions/checkout@v3
         with:
           repository: KarsonJo/racknerd-observer
           token: ${{ secrets.PRIVATE_ACCESS_TOKEN }}
@@ -41,4 +43,11 @@ jobs:
           python --version
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          python main.py
+          python main.py $custom_param
+      # save output as artifacts
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: racknerd-data-output
+          path: racknerd-list.json
+          
