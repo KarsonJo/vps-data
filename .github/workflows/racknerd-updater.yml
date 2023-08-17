@@ -37,4 +37,4 @@ jobs:
           custom_param: ${{ inputs.custom_param }}
         run: |
           echo $custom_param
-          ${{ env.RACKNERD_REPO }}/main.py
+          python ${{ env.RACKNERD_REPO }}/main.py
