@@ -26,6 +26,12 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: CheckOut Main
+        uses: actions/checkout@v3
+        with:
+          path: ${{ env.MAIN_REPO }}
+
+      # Checkout script repo
       - name: CheckOut Source
         uses: actions/checkout@v3
         with:
@@ -41,8 +47,7 @@ jobs:
           name: racknerd-data-output
           path: ${{ env.RACKNERD_REPO }}
           
-          
-      # Runs a single command using the runners shell
+      # Run racknerd update script
       - name: Run update script
         run: |
           echo $custom_param
@@ -59,3 +64,19 @@ jobs:
           name: racknerd-data-output
           path: ${{ env.RACKNERD_REPO }}/racknerd-list.json
           
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: racknerd-filtered-output
+          path: ${{ env.RACKNERD_REPO }}/racknerd-filtered.json
+
+      # update data by committing to this repo
+      - name: Run commit script
+        run: |
+          cp ${{ env.RACKNERD_REPO }}/racknerd-filtered.json ${{ env.MAIN_REPO }}//racknerd-filtered.json
+          cd ${{ env.MAIN_REPO }}
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add racknerd-filtered.json
+          git commit -m "automatic update"
+          git push
