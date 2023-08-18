@@ -23,6 +23,9 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+    
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -73,7 +76,7 @@ jobs:
       # update data by committing to this repo
       - name: Run commit script
         run: |
-          cp ${{ env.RACKNERD_REPO }}/racknerd-filtered.json ${{ env.MAIN_REPO }}//racknerd-filtered.json
+          cp ${{ env.RACKNERD_REPO }}/racknerd-filtered.json ${{ env.MAIN_REPO }}/racknerd-filtered.json
           cd ${{ env.MAIN_REPO }}
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
