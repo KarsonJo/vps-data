@@ -78,8 +78,8 @@ jobs:
         run: |
           cp ${{ env.RACKNERD_REPO }}/racknerd-filtered.json ${{ env.MAIN_REPO }}/racknerd-filtered.json
           cd ${{ env.MAIN_REPO }}
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
           git add racknerd-filtered.json
           git commit -m "automatic update"
           git push
