@@ -1,0 +1,50 @@
+/* @import  "tabulator-tables"; */
+@import "../../node_modules/tabulator-tables/dist/css/tabulator_semanticui.min.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+    :root {
+        @apply bg-slate-100
+    }
+
+
+    /* ===== Scrollbar CSS ===== */
+    /* Firefox */
+
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: #f0758a #ffffff00;
+    }
+
+    /* Chrome, Edge, and Safari */
+    *::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    *::-webkit-scrollbar-track {
+        background: #ffffff00;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background-color: #f0758a;
+        border-radius: 10px;
+    }
+}
+
+@layer components {
+    .emoji-mask {
+        user-select: none;
+        background-color: currentColor;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .tabulator {
+        @apply m-0 rounded-xl;
+    }
+}
