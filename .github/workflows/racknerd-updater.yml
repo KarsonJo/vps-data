@@ -44,9 +44,12 @@ jobs:
 
       # current time testing
       - name: Time Testing
-        run: |
+        run:
           echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+      - name: Time Testing2
+        run:
           echo ${{ env.NOW }}
+
 
       # Install Python & Cache
       - name: Setup Python
