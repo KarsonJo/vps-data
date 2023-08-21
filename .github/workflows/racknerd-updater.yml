@@ -9,7 +9,9 @@ env:
 # Controls when the workflow will run
 on:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: 30 6,12,18 * * *
+    - cron: 30 0 * * *
+    - cron: 0 16 * * *
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
@@ -44,11 +46,8 @@ jobs:
 
       # current time testing
       - name: Time Testing
-        run:
-          echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
-      - name: Time Testing2
-        run:
-          echo ${{ env.NOW }}
+        if: github.event.schedule == '0 16 * * *'
+        run: echo "UTC 16:00"
 
 
       # Install Python & Cache
