@@ -41,6 +41,13 @@ jobs:
           repository: KarsonJo/racknerd-observer
           token: ${{ secrets.PRIVATE_ACCESS_TOKEN }}
           path: ${{ env.RACKNERD_REPO }}
+
+      # Install Python & Cache
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
           
       # Download Previous Artifact
       - name: Download artifact
