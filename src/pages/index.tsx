@@ -122,7 +122,12 @@ export default function Home() {
                     </div>
                     <hr />
                     <ul>
-                        <li><span>更多奇技淫巧：</span><a className='hover:text-rose-500' href="https://www.karsonjo.com">我的博客</a></li>
+                        <li>
+                            <span>更多奇技淫巧：</span>
+                        <a className='hover:text-rose-500' href="https://www.karsonjo.com">我的博客</a>
+                        <span>、</span>
+                        <a className='hover:text-rose-500' href="https://github.com/KarsonJo/vps-data">github</a>
+                        </li>
                         <li><span>数据最后更新于：</span><span>{meta?.utcTime.toLocaleString(undefined, { timeZoneName: 'short' })}</span></li>
                     </ul>
                     <hr />
