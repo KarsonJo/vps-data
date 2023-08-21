@@ -9,9 +9,9 @@ env:
 # Controls when the workflow will run
 on:
   schedule:
-    - cron: 30 6,12,18 * * *
-    - cron: 30 0 * * *
-    - cron: 0 16 * * *
+    - cron: 30 4,10,22 * * * # UTC+8 12:00, 18:00, 06:00
+    - cron: 30 16 * * * # UTC+8 00:00
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
@@ -36,6 +36,7 @@ jobs:
         with:
           path: ${{ env.MAIN_REPO }}
 
+
       # Checkout script repo
       - name: CheckOut Source
         uses: actions/checkout@v3
@@ -43,11 +44,6 @@ jobs:
           repository: KarsonJo/racknerd-observer
           token: ${{ secrets.PRIVATE_ACCESS_TOKEN }}
           path: ${{ env.RACKNERD_REPO }}
-
-      # current time testing
-      - name: Time Testing
-        if: github.event.schedule == '0 16 * * *'
-        run: echo "UTC 16:00"
 
 
       # Install Python & Cache
@@ -57,6 +53,7 @@ jobs:
           python-version: '3.10'
           cache: 'pip'
           
+
       # Download Previous Artifact
       - name: Download artifact
         id: download-artifact
@@ -65,15 +62,33 @@ jobs:
           name: racknerd-data-output
           path: ${{ env.RACKNERD_REPO }}
           
-      # Run racknerd update script
-      - name: Run update script
+
+      # Install requirements
+      - name: Install requirements
         run: |
-          echo $custom_param
           cd ${{ env.RACKNERD_REPO }}
-          python --version
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+      # Run racknerd update script
+      - name: Run full update script
+        if: github.event.schedule == '30 16 * * *'
+        run: |
+          echo "UTC+8 00:30, full update"
+          python main.py -f
+
+      - name: Run normal update script
+        if: github.event.schedule == '30 4,10,22 * * *'
+        run: |
+          echo "UTC+8 minute 30 past every 6 hour except 00:30, normal update"
+          python main.py
+
+      - name: Run manual update script
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo "manual update"
           python main.py ${{ inputs.custom_param }}
+
           
       # save output as artifacts
       - name: Archive code coverage results
