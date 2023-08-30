@@ -75,19 +75,19 @@ jobs:
         if: github.event.schedule == '30 16 * * *'
         run: |
           echo "UTC+8 00:30, full update"
-          python main.py -f
+          python ${{ env.RACKNERD_REPO }}/main.py -f
 
       - name: Run normal update script
         if: github.event.schedule == '30 4,10,22 * * *'
         run: |
           echo "UTC+8 minute 30 past every 6 hour except 00:30, normal update"
-          python main.py
+          python ${{ env.RACKNERD_REPO }}/main.py
 
       - name: Run manual update script
         if: github.event_name == 'workflow_dispatch'
         run: |
           echo "manual update"
-          python main.py ${{ inputs.custom_param }}
+          python ${{ env.RACKNERD_REPO }}/main.py ${{ inputs.custom_param }}
 
           
       # save output as artifacts
