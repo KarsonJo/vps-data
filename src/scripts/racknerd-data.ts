@@ -3,8 +3,9 @@ import { VpsData } from "./vpsdata"
 export const basicHeader = () => new Headers()
 
 export async function getRacknerdData(): Promise<[ResponseMeta | null, VpsData[]]> {
-    const href = `https://raw.githubusercontent.com/KarsonJo/vps-data/main/racknerd-filtered.json`
-    const headers = basicHeader()
+    const githubProxyDomain = `raw.gitmirror.com`;
+    const href = `https://${githubProxyDomain}/KarsonJo/vps-data/main/racknerd-filtered.json`;
+    const headers = basicHeader();
     // 请求
     let items: Array<VpsData> = [];
     let meta: ResponseMeta | null = null;
